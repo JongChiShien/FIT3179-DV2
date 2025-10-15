@@ -17,7 +17,7 @@
                 "lookup": "properties.Name", 
                 "from": {
                     "data": {
-                        "url": "data/poverty_state.csv"
+                        "url": "poverty_state.csv"
                     }, 
                     "key": "state", 
                     "fields": ["poverty"]
@@ -86,3 +86,4 @@
 ]
 
 }
+
