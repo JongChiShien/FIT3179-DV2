@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-  "data": {"url": "data/poverty_state.csv"},
+  "data": {"url": "poverty_state.csv"},
   "params": [
     {
         "name": "select_indicator", 
@@ -50,4 +50,5 @@
     ]
   }
 }
+
 
