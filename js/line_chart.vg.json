@@ -1,0 +1,126 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "title": {"text": "Poverty Over the Years", "fontSize": 15},
+  "data": {"url": "../data/hh_poverty_state.csv"},
+  "transform": [
+    {
+        "fold": ["poverty_absolute", "poverty_hardcore", "poverty_relative"],
+        "as": ["type", "rate"]
+    },
+    {"filter": "datum.state == 'Malaysia'"},
+    {
+        "calculate": "datum.type == 'poverty_absolute' ? 'Absolute Poverty' : datum.type == 'poverty_hardcore' ? 'Hardcore Poverty' : datum.type == 'poverty_relative' ? 'Relative Poverty' : 'Unknown'",
+        "as": "type_label"
+    },
+    {
+        "calculate": "year(datum.date)", 
+        "as": "year"
+    }
+  ],
+  "width": 560, 
+  "height": 280, 
+  "layer":[
+    {
+        "data": {
+            "values": [
+                {"x": "1981-01-01", "x2": "1985-01-01", "y": 29, "y2": 35},
+                {"x": "1981-01-01", "x2": "1983-08-01", "y": 12, "y2": 8}
+            ]
+        },
+        "mark": {"type": "rule", "color": "gray", "size": 2},
+        "encoding": {
+            "x": {"field": "x", "type": "temporal"}, 
+            "x2": {"field": "x2"}, 
+            "y": {"field": "y", "type": "quantitative"}, 
+            "y2": {"field": "y2"}
+        }
+    },
+    {
+        "data": {
+            "values": [
+                {"x": "1977-01-01", "y": 32, "label": "Poverty fell by nearly 50% as"}, 
+                {"x": "1977-01-01", "y": 29.2, "label": "the economy grew rapidly"},
+                {"x": "1964-01-01", "y": 12, "label": "Peaked at 6.9%, due to higher"},
+                {"x": "1964-01-01", "y": 9.2, "label": "poverty rates in rural areas"}
+            ]
+        }, 
+        "mark": {
+            "type": "text", 
+            "dx": 160,
+            "dy": -22, 
+            "fontSize": 11, 
+            "color": "black"
+        }, 
+        "encoding": {
+            "x": {"field": "x", "type": "temporal"}, 
+            "y": {"field": "y", "type": "quantitative"}, 
+            "text": {"field": "label", "type": "nominal"}
+        }
+    },
+    {
+        "params": [
+            {
+                "name": "povtype", 
+                "select": {
+                    "type": "point", 
+                    "fields": ["type_label"], 
+                    "on": "click"
+            }
+        }
+    ],
+        "mark": {"type": "line", "point": false},
+        "encoding": {
+            "x": {
+                "field": "date", 
+                "type": "temporal", 
+                "title": "Year", 
+                "scale": {"domain": ["1970-01-01", "2022-01-01"]},
+                "axis": {
+                    "labelFontSize": 10, 
+                    "titleFontSize": 12, 
+                    "titlePadding": 7,
+                    "grid": false
+                }
+            },
+            "y": {
+                "field": "rate", 
+                "type": "quantitative",
+                "title": "Poverty Rate (%)",
+                "axis": {
+                    "labelFontSize": 10, 
+                    "titleFontSize": 12, 
+                    "titlePadding": 0
+                }
+            },
+                "color": {
+                    "field": "type_label", 
+                    "type": "nominal", 
+                    "title": "Poverty Type", 
+                    "legend": null
+            },
+                "opacity": {
+                    "condition": {"param": "povtype", "value": 1},
+                    "value": 0.1
+            }
+        }
+    },
+    {
+        "mark": {"type": "point", "filled": true},
+        "encoding": {
+            "x": {"field": "date", "type": "temporal"},
+            "y": {"field": "rate", "type": "quantitative"}, 
+            "color": {"field": "type_label", "type": "nominal"},
+            "tooltip": [
+                {"field": "date", "timeUnit": "year", "title": "Year"},
+                {"field": "type_label", "type": "nominal", "title": "Poverty Type"},
+                {"field": "rate", "type": "quantitative", "title": "Poverty Rate (%)"}
+            ],
+            "opacity": {
+                "condition": {"param": "povtype", "value": 1},
+                "value": 0.1
+            }
+        }
+    }
+    ],
+    "config": {"axisY": {"minExtent": 30}}
+}
