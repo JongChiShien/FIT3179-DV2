@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
   "title": {"text": "Distribution Across States and Federal Territories", "fontSize": 15},
-  "data": {"url": "data/hh_poverty_state.csv"}, 
+  "data": {"url": "hh_poverty_state.csv"}, 
   "transform": [
     {
         "fold": [
@@ -95,3 +95,4 @@
     "config": {"axisY": {"minExtent": 30}}
 
 }
+
