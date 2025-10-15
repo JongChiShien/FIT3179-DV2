@@ -1,0 +1,91 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+    "title": {"text": "Unemployment Rates by Gender", "fontSize": 15},
+    "data": {"url": "../data/unemployment.csv"}, 
+    "transform": [
+        {
+            "filter": {
+            "field": "Year", 
+            "oneOf": [2001, 2009,2015, 2020, 2021]
+        }
+    }
+    ],
+    "width": 500, 
+    "height": 250,
+    "layer": [
+        {
+            "mark": "bar", 
+            "encoding": {
+                "y": {
+                    "field": "Year", 
+                    "type": "ordinal", 
+                    "title": "Year", 
+                    "axis": {
+                        "titleFontSize": 12,
+                        "labelFontSize": 10
+                    }
+                }, 
+                "x": {
+                    "field": "Percentage", 
+                    "type": "quantitative", 
+                    "title": "Unemployment Rate (%)", 
+                    "scale": {"domain": [0, 70]}, 
+                    "axis": {
+                        "titleFontSize": 12,
+                        "labelFontSize": 10,
+                        "tickMinStep": 10
+                    }
+                        }, 
+                "yOffset": {"field": "Sex"}, 
+                "color": {
+                    "field": "Sex", 
+                    "type": "nominal", 
+                    "legend": {"title": "Gender"}
+                }, 
+                "tooltip": [
+                    {"field": "Year", "type": "ordinal"}, 
+                    {"field": "Sex", "type": "nominal", "title": "Gender"}, 
+                    {"field": "Percentage", "type": "quantitative", "title": "Unemployment Rate (%)"}
+                ]
+            }
+        }, 
+        {
+            "transform": [
+                {"filter": "datum.Percentage == 59.9"}
+            ], 
+            "mark": {
+                "type": "text", 
+                "align": "center", 
+                "baseline": "bottom",  
+                "dx": 15,
+                "dy": 5, 
+                "fontWeight": "bold"
+            }, 
+            "encoding": {
+                "x": {"field": "Percentage", "type": "quantitative"},
+                "y": {"field": "Year", "type": "ordinal"}, 
+                "yOffset": {"field": "Sex"}, 
+                "text": {"field": "Percentage", "type": "quantitative"}
+            }
+        }, 
+        {
+            "transform": [
+                {"filter": "datum.Percentage == 49.7"}
+            ], 
+            "mark": {
+                "type": "text", 
+                "align": "center", 
+                "baseline": "bottom",  
+                "dx": 15,
+                "dy": 5, 
+                "fontWeight": "bold"
+            }, 
+            "encoding": {
+                "x": {"field": "Percentage", "type": "quantitative"},
+                "y": {"field": "Year", "type": "ordinal"}, 
+                "yOffset": {"field": "Sex"}, 
+                "text": {"field": "Percentage", "type": "quantitative"}
+            }
+        }
+    ]
+}

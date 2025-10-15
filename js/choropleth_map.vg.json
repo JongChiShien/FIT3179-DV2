@@ -1,0 +1,87 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": {
+        "text": "Poverty Across Malaysian States (2022)",
+        "fontSize": 15
+    }, 
+    "width": 660,
+    "height": 300, 
+    "projection": {"type": "mercator", "center": [108, 3], "scale": 2100},
+    "layer":[{
+        "data": {
+            "url": "https://raw.githubusercontent.com/jnewbery/CartogramMalaysia/9ac25c828e0306dfa2c2869f98eb2b357da69764/public/data/malaysia-states.topojson",  
+            "format": {"type": "topojson", "feature": "states"}
+        },
+        "transform": [
+            {
+                "lookup": "properties.Name", 
+                "from": {
+                    "data": {
+                        "url": "../data/poverty_state.csv"
+                    }, 
+                    "key": "state", 
+                    "fields": ["poverty"]
+                }
+            }, 
+            {
+                "filter": "datum['properties.Name'] != 'Kuala Lumpur' && datum['properties.Name'] != 'Labuan'"  
+            },
+            {
+                "calculate": "(datum.poverty - 1.4)/(19.7 - 1.4)",
+                "as": "poverty_norm"
+            }
+        ],
+        "mark": {
+            "type": "geoshape",
+            "stroke": "#656565",
+            "strokeWidth": 0.5
+        }, 
+        "encoding": {
+            "color": {
+                "field": "poverty_norm", 
+                "type": "quantitative", 
+                "scale": {"scheme": "browns"},
+            "legend": {
+                "title": "Normalized Poverty",
+                "orient": "bottom",
+                "titleFontSize": 11,
+                "labelFontSize": 10
+            }},
+            "tooltip": [
+                {"field": "properties.Name", "type": "nominal", "title": "State"}, 
+                {"field": "poverty", "type": "quantitative", "title": "Poverty Rate (%)"},
+                {"field": "poverty_norm", "type": "quantitative", "title": "Normalized Poverty", "format": ".2f"}
+            ]
+        }
+    }, 
+    {
+        "data": {
+            "graticule": {
+                "step": [5, 5], 
+                "extent": [[100,0], [117, 7]]
+            }},
+        "mark": {
+            "type": "geoshape",
+            "stroke": "lightgray",
+            "strokeWidth": 0.3,
+            "fill": null
+        }
+    },
+    {
+        "data": {
+            "url": "../data/poverty_state.csv"
+        }, 
+        "transform": [
+            {
+                "filter": "datum.state != 'Kuala Lumpur'"
+            }
+        ],
+        "mark": {"type": "text", "fontSize": 11}, 
+        "encoding": {
+            "longitude": {"field": "longitude", "type": "quantitative"},
+            "latitude": {"field": "latitude", "type": "quantitative"}, 
+            "text": {"field": "state", "type": "nominal"}
+        }
+    }
+]
+}

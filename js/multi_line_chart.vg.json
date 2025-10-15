@@ -1,0 +1,96 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "title": {"text": "Distribution Across States and Federal Territories", "fontSize": 15},
+  "data": {"url": "../data/hh_poverty_state.csv"}, 
+  "transform": [
+    {
+        "fold": [
+            "poverty_absolute", 
+            "poverty_hardcore", 
+            "poverty_relative"
+        ],
+        "as": ["type", "rate"]
+    },
+    {"filter": "datum.state != 'Malaysia'"},
+    {
+        "calculate": "datum.type == 'poverty_absolute' ? 'Absolute Poverty' : datum.type == 'poverty_hardcore' ? 'Hardcore Poverty' : datum.type == 'poverty_relative' ? 'Relative Poverty' : 'Unknown'",
+        "as": "type_label"
+    }],
+    "columns": 4,
+    "facet": {
+        "field": "state", 
+        "type": "nominal",
+        "header": {
+            "labelFontSize": 12, 
+            "labelPadding": 2,
+            "title": null, 
+            "labelFontWeight": "bold"
+        }
+    },
+    "spec": {
+        "width": 220, 
+        "height": 90, 
+        "layer": [
+            {
+                "params": [
+                    {
+                        "name": "povtype", 
+                        "select": {
+                            "type": "point",
+                            "fields": ["type_label"], 
+                            "on": "click"
+                        }, 
+                        "bind": "legend"
+                    }
+                ],
+                "mark": {"type": "line", "point": false}, 
+                "encoding": {
+                    "x": {
+                        "field": "date",
+                        "type": "temporal", 
+                        "title": "Year", 
+                        "scale": {
+                            "domain": ["1970-01-01", "2022-01-01"],
+                            "nice": false
+                        },
+                        "axis": {
+                            "grid": false, 
+                            "format": "%Y", 
+                            "labelFontSize": 10,
+                            "titleFontSize": 12,
+                            "values":[
+                                "1970-01-01",
+                                "1990-01-01", 
+                                "2006-01-01", 
+                                "2022-01-01"]
+                        }
+                    }, 
+                    "y": {
+                        "field": "rate", 
+                        "type": "quantitative",
+                        "title": "Poverty Rate (%)", 
+                        "axis": {
+                            "labelFontSize": 10, 
+                            "titleFontSize": 12
+                        }
+                    },
+                    "color": {
+                        "field": "type_label", 
+                        "type": "nominal",
+                        "legend": null
+                    }, 
+                    "opacity": {
+                        "condition": {"param": "povtype", "value": 1}, 
+                        "value": 0.1
+                    },
+                    "tooltip": [
+                        {"field": "date", "timeUnit": "year", "title": "Year"},
+                        {"field": "type_label", "type": "nominal", "title": "Poverty Type"},
+                        {"field": "rate", "type": "quantitative", "title": "Poverty Rate (%)"}
+                    ]
+                }
+            }
+        ]
+    }, 
+    "config": {"axisY": {"minExtent": 30}}
+}

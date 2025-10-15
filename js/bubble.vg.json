@@ -1,0 +1,112 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "description": "Packed bubble chart showing poverty incidence by ethnicity (2002)",
+  "width": 100,
+  "height": 320,
+
+  "signals": [
+    {"name": "cx", "update": "width/2-260"},
+    {"name": "cy", "update": "170"}
+  ],
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {"ethnic": "Bumiputera", "poverty": 7.3},
+        {"ethnic": "Chinese", "poverty": 1.5},
+        {"ethnic": "Indians", "poverty": 1.9},
+        {"ethnic": "Others", "poverty": 14.3}
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "size",
+      "domain": [0, 15],
+      "range": [0, 29000]  
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": ["Bumiputera", "Chinese", "Indians", "Others"],
+      "range": ["#3498db", "#e74c3c", "#f39c12", "#9b59b6"]
+    }
+  ],
+  "marks": [
+    {
+      "type": "text",
+      "encode": {
+        "enter": {
+          "x": {"signal": "width/2-220"},
+          "y": {"value": 5.5},
+          "text": {"value": "Year 2002"},
+          "align": {"value": "center"},
+          "baseline": {"value": "top"},
+          "fontSize": {"value": 15},
+          "fontWeight": {"value": "bold"}
+        }
+      }
+    },
+    {
+      "name": "nodes",
+      "type": "symbol",
+      "from": {"data": "table"},
+      "encode": {
+        "enter": {
+          "fill": {"scale": "color", "field": "ethnic"},
+          "xfocus": {"signal": "cx"},
+          "yfocus": {"signal": "cy"}
+        },
+        "update": {
+          "size": {"signal": "datum.poverty", "scale": "size"},
+          "stroke": {"value": "white"},
+          "strokeWidth": {"value": 4},
+          "fillOpacity": {"value": 0.85},
+          "tooltip": {
+            "signal": "{'Ethnicity': datum.ethnic, 'Poverty Rate (%)': datum.poverty}"
+          }
+        },
+        "hover": {
+          "fillOpacity": {"value": 1},
+          "strokeWidth": {"value": 6}
+        }
+      },
+      "transform": [
+        {
+          "type": "force",
+          "iterations": 300,
+          "static": false,
+          "restart": true,
+          "forces": [
+            {
+              "force": "collide",
+              "iterations": 3,
+              "radius": {"expr": "sqrt(datum.size)/2 + 1"}  
+            },
+            {"force": "center", "x": {"signal": "cx"}, "y": {"signal": "cy"}},
+            {"force": "x", "x": "xfocus", "strength": 0.05},
+            {"force": "y", "y": "yfocus", "strength": 0.05}
+          ]
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "from": {"data": "nodes"},
+      "encode": {
+        "enter": {
+          "align": {"value": "center"},
+          "baseline": {"value": "middle"},
+          "fontSize": {"value": 12},
+          "fontWeight": {"value": "bold"},
+          "fill": {"value": "white"}
+        },
+        "update": {
+          "x": {"field": "x"},
+          "y": {"field": "y"},
+          "text": {"field": "datum.ethnic"}
+        }
+      }
+    }
+  ]
+}

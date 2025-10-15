@@ -1,0 +1,52 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "data": {"url": "../data/poverty_state.csv"},
+  "params": [
+    {
+        "name": "select_indicator", 
+        "value": "financial_gap", 
+        "bind": {
+            "input": "select", 
+            "options": ["financial_gap","income", "expenditure"], 
+            "labels": ["Financial Gap","Income Level", "Expenditure Level"], 
+            "name": "Indicator Selection: "
+        }
+    }
+  ],
+  "transform": [
+    {"filter": "datum.state != 'Kuala Lumpur'"}, 
+    {
+        "calculate": "select_indicator == 'financial_gap' ? datum.financial_gap : (select_indicator == 'income' ? datum.income_mean : datum.expenditure_mean)",
+        "as": "value"
+    }, 
+    {
+        "calculate": "select_indicator == 'financial_gap' ? 'Financial Gap' : (select_indicator == 'income' ? 'Avg. Income' : 'Avg.Expenditure')",
+        "as": "label"
+    }
+  ],
+  "width": 500, 
+  "height": 290,
+  "mark": {"type": "circle"}, 
+  "encoding": {
+    "x": {
+        "field": "value", 
+        "type": "quantitative", 
+        "title": "Financial Gap / Income / Expenditure", 
+        "scale": {
+            "domain": {"expr": "select_indicator == 'financial_gap' ? [1000, 6000] : (select_indicator == 'income' ? [4000, 10000] : [2500, 7500])"}
+        }
+    }, 
+    "y": {
+        "field": "poverty", 
+        "type": "quantitative", 
+        "title": "Poverty Rate (%)"
+    }, 
+    "size": {"value": 130}, 
+    "tooltip": [
+        {"field": "state", "type": "nominal", "title": "State"}, 
+        {"field": "label", "type": "nominal", "title": "Indicator"},
+        {"field": "value", "type": "quantitative", "title": "Value"},
+        {"field": "poverty", "type": "quantitative", "title": "Poverty Rate (%)"}
+    ]
+  }
+}
