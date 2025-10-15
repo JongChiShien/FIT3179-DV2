@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
   "title": {"text": "Poverty Over the Years", "fontSize": 15},
-  "data": {"url": "../data/hh_poverty_state.csv"},
+  "data": {"url": "data/hh_poverty_state.csv"},
   "transform": [
     {
         "fold": ["poverty_absolute", "poverty_hardcore", "poverty_relative"],
