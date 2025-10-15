@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/grids-responsive-min.css" />
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+    <title>Data Visualisation 2</title>
+</head>
+<body>
+
+    <div class="page">
+
+        <div class="pure-g">
+            <div class="pure-u-1-1">
+                <h1>Poverty In Malaysia</h1>
+            </div>
+        </div>
+        
+        <div class="pure-g">
+            <div class="pure-u-2-3">
+                <div id="vis1" class="vis-container"></div>
+            </div>
+            <div class="pure-u-1-3">
+                <div class="description description-right">
+                    <h2>Trends Over Time</h2>
+                    <p>As a developing country, Malaysia naturally still faces some poverty. Over the years, 
+                        the government has been working to improve its economy to address socioeconomic issues
+                        such as poverty. Although poverty has gradually declined, the rates are still not fully
+                        satisfactory. Poverty can be measured in three ways: hardcore poverty (extreme), 
+                        absolute poverty (unable to afford basic needs) and relative poverty (income below average).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pure-g">
+            <div class="pure-u-1-1">
+                <div id="vis2" class="vis-container"></div>
+            </div>
+        </div>
+
+        <div class="pure-g">
+            <div class="pure-u-2-3">
+                <div id="vis3" class="vis-container"></div>
+            </div>
+            <div class="pure-u-1-3">
+                <div class="description description-right">
+                    <h2>Geographic Distribution</h2>
+                    <p>The choropleth map highlights poverty across the states with darker shades indicating 
+                        higher rates. In 2022, national poverty rates were low but some states such as Kelantan and Sabah
+                        had rates above 10% which is much higher than the national average. Rural areas are more
+                        likely to experience poverty due to limited economic opportunities.  
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pure-g">
+            <div class="pure-u-1-3">
+                <div class="description description-left">
+                    <h2>Ethnic Poverty</h2>
+                    <p>Let's take a closer look at poverty. Malaysia is a diverse country with many ethnicities, so comparing them shows 
+                        which groups are most affected. This chart compares ealier and later years to show whether poverty rates have
+                        improved for each ethnicity. The Other category may include ethnicities such as Malay, Iban or non-Malaysian citizen.
+                    </p>
+                </div>
+            </div>
+            <div class="pure-u-1-3">
+                <div id="vis4" class="vis-container"></div>
+            </div>
+            <div class="pure-u-1-3">
+                <div id="vis5" class="vis-container"></div>
+            </div>
+        </div>
+
+        <div class="pure-g">
+            <div class="pure-u-2-3">
+                <div id="vis6" class="vis-container"></div>
+            </div>
+            <div class="pure-u-1-3">
+                <div class="description description-right">
+                    <h2>Poverty Factors 1.0</h2>
+                    <p>Unemployment is a key factor affecting poverty rates. Individuals without steady income 
+                        are more likely to struggle to meet basic needs. Higher unemployment reduces access to food, healthcare
+                        and education, increasing the risk of falling into or remaining in poverty. In 2009, due to poor
+                        economy and lower job opportunities, female are more likely to experience poverty.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pure-g">
+            <div class="pure-u-1-3">
+                <div class="description description-left">
+                    <h2>Poverty Factors 2.0</h2>
+                    <p>Another factor affecting poverty is the financial gap between income and expenditure. This scatter plot shows the relationship between income, expenditure, and financial gap, highlighting households where spending exceeds earnings. It helps identify groups at greater risk of poverty due to insufficient income relative to their expenses.
+                    </p>
+                </div>
+            </div>
+            <div class="pure-u-1-3">
+                <div id="vis7" class="vis-container"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript"> 
+        var specVis1 = "../js/line_chart.vg.json";
+        var specVis2 = "../js/multi_line_chart.vg.json";
+        var specVis3 = "../js/choropleth_map.vg.json";
+        var specVis4 = "../js/bubble.vg.json";
+        var specVis5 = "../js/bubble2.vg.json";
+        var specVis6 = "../js/bar_chart.vg.json";
+        var specVis7 = "../js/scatter_plot.vg.json";
+
+        vegaEmbed('#vis1', specVis1, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+        vegaEmbed('#vis2', specVis2, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+        vegaEmbed('#vis3', specVis3, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+        vegaEmbed('#vis4', specVis4, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+        vegaEmbed('#vis5', specVis5, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+        vegaEmbed('#vis6', specVis6, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+
+         vegaEmbed('#vis7', specVis7, {"actions": false}).then(function (result) {
+        // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+        }).catch(console.error);
+    </script>
+</body>
+</html>
