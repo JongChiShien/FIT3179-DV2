@@ -1,7 +1,7 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
     "title": {"text": "Unemployment Rates by Gender", "fontSize": 15},
-    "data": {"url": "../data/unemployment.csv"}, 
+    "data": {"url": "data/unemployment.csv"}, 
     "transform": [
         {
             "filter": {
@@ -88,4 +88,5 @@
             }
         }
     ]
+
 }
