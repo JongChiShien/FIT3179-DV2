@@ -1,0 +1,68 @@
+body *{
+    font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+    font-weight: 900;
+}
+
+body {
+    background-color: lightgray;
+}
+
+.page {
+    width: 1000px; 
+    background-color: white;
+    margin: auto;
+    padding: 50px;
+    padding-top: 35px;
+}
+
+.vis-container {
+    width: 100%;
+}
+
+.description h2, h1{
+    margin-top: 0px;
+}
+
+.description-right {
+    padding-left: 10px;
+}
+
+.description-left {
+    padding-right: 10px;
+}
+
+.pure-g {
+    margin-bottom: 40px;
+}
+
+.pure-u-1-1 {
+    text-align: center;
+    font-size: 24px;
+}
+
+.description-right p{
+    line-height: 1.6;
+}
+
+.description-left p{
+    line-height: 1.6;
+}
+
+#vis4 {
+    margin-left: 70px;
+}
+
+#vis5 {
+    margin-left: 90px;
+}
+
+#vis6 {
+    margin-left: -20px;
+}
+
+#vis7 {
+    margin-left: 100px;
+}
